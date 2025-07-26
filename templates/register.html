@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Parkkro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <header class="main-header">
+        <nav class="nav-container">
+            <a href="{{ url_for('index') }}" class="logo-container">
+                <div class="logo-glow"></div>
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Parkkro Logo" class="navbar-logo">
+            </a>
+            <div class="nav-links">
+                <a href="{{ url_for('index') }}" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                <a href="{{ url_for('index') }}#features" class="nav-link"><i class="fas fa-star"></i> Features</a>
+                <a href="{{ url_for('index') }}#about" class="nav-link"><i class="fas fa-info-circle"></i> About</a>
+                <a href="{{ url_for('index') }}#contact" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+            </div>
+            <div class="nav-actions">
+                <a href="{{ url_for('login') }}" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Login</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="auth-container">
+        <div class="auth-card">
+            <h1><i class="fas fa-user-plus"></i> Create New Account</h1>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+            <form method="POST" class="auth-form">
+                <div class="form-group">
+                    <label for="username"><i class="fas fa-user"></i> Username</label>
+                    <input type="text" id="username" name="username" required placeholder="Choose a username">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="email" name="email" required placeholder="Enter your email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Create a strong password">
+                </div>
+                
+                <button type="submit" class="btn btn-success btn-block">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+            </form>
+            
+            <div class="auth-links">
+                <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Parkkro</h3>
+                <p>Smart parking solutions for modern cities. Making parking hassle-free and efficient.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('index') }}#features">Features</a></li>
+                    <li><a href="{{ url_for('index') }}#about">About Us</a></li>
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul class="contact-info">
+                    <li><i class="fas fa-envelope"></i> support@parkkro.com</li>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Parking Street, City</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Parkkro. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
