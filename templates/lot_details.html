@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lot Details - {{ lot.name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/lot_details.css') }}">
+</head>
+
+<body>
+    <div>
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-primary"> Back to Dashboard</a>
+    </div>
+   
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <h1>Details for {{ lot.name }}</h1>
+    <p><strong>Address:</strong> {{ lot.address }}, {{ lot.pincode }}</p>
+    <p><strong>Current Active Spots:</strong> {{ spot_details|length }} / {{ lot.capacity }}</p>
+    <hr>
+
+    {% if spot_details|length < lot.capacity %}
+    <div class="add-spot-form">
+        <h3>Add New Spot</h3>
+        <form action="{{ url_for('add_spot', lot_id=lot.id) }}" method="POST">
+            <button type="submit" class="btn btn-success">Add Spot</button>
+        </form>
+    </div>
+    <hr>
+    {% endif %}
+
+    <h2>Spot Status</h2>
+    <div class="spot-grid">
+        {% for detail in spot_details %}
+            <div class="spot {% if detail.spot.status == 'A' %}available{% else %}occupied{% endif %}">
+                Spot {{ detail.spot.spot_number }}
+                <br>
+                
+                {% if detail.user %}
+                    <span>Occupied</span>
+                    <span class="user-info">by: {{ detail.user.username }}</span>
+                {% else %}
+                    <span>Available</span>
+                    <form action="{{ url_for('delete_spot', spot_id=detail.spot.id) }}" method="POST" style="display:inline;">
+                         <button type="submit" class="delete-spot-btn" title="Delete Spot" onclick="return confirm('Are you sure?');">&times;</button>
+                    </form>
+                {% endif %}
+
+            </div>
+        {% else %}
+            <p>No spots found for this lot.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
