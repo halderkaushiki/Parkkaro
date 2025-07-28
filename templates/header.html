@@ -1,0 +1,23 @@
+{# Compact header for all pages except index.html #}
+<header class="main-header" style="margin:0; padding:0; border-radius:0; border-bottom:3px solid #F39F5A; background:linear-gradient(90deg, #1D1A39 80%, #F39F5A 100%); position:fixed; top:0; left:0; width:100vw; min-width:100vw; z-index:100; box-shadow:none;">
+    <nav class="nav-container" style="margin:0; padding:0 2em; width:100vw; min-width:100vw; border-radius:0; box-shadow:none; align-items:center; display:flex; justify-content:space-between;">
+        <a href="{{ url_for('index') }}" class="logo-container" style="margin-left:0; display:flex; align-items:center; gap:0.5em;">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Parkkro Logo" class="navbar-logo" style="width:120px; padding:4px; border-radius:10px;">
+        </a>
+        <div class="nav-actions" style="display:flex; align-items:center; gap:1em;">
+            {% if current_user and current_user.is_authenticated %}
+                <span style="color:#E8BCB9; font-weight:500; margin-right:1em;">Hi, {{ current_user.username }}</span>
+                <a href="{{ url_for('user_dashboard') }}" class="btn btn-primary" style="padding:0.5em 1.2em; font-size:1em;">Dashboard</a>
+                <a href="{{ url_for('logout') }}" class="btn btn-danger" style="padding:0.5em 1.2em; font-size:1em;">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="btn btn-primary" style="padding:0.5em 1.2em; font-size:1em;">Login</a>
+                <a href="{{ url_for('register') }}" class="btn btn-success" style="padding:0.5em 1.2em; font-size:1em;">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+</header>
+<!-- Remove any gap above header -->
+<style>
+body { margin-top:0 !important; padding-top:0 !important; }
+.main-header { margin-top:0 !important; }
+</style>

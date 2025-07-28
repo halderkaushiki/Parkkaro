@@ -1,24 +1,66 @@
+
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 from models.models import db, User, ParkingLot, ParkingSpot, Booking
 from datetime import datetime
 import math
 
-
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'kaushikimad1'
+app.config['SECRET_KEY'] = 'Kaushikimad1'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///parking.db'
 db.init_app(app)
+
+# Remove user route for admin
+@app.route('/admin/remove_user/<int:user_id>', methods=['POST'])
+def remove_user(user_id):
+    if not session.get('is_admin'):
+        flash("Admin access required.", "error")
+        return redirect(url_for('login'))
+
+    user = User.query.get_or_404(user_id)
+    if user.is_admin:
+        flash("Cannot remove an admin user.", "error")
+        return redirect(url_for('admin_all_bookings'))
+
+    # Optionally, delete user's bookings, or set to cascade in models
+    Booking.query.filter_by(user_id=user.id).delete()
+    db.session.delete(user)
+    db.session.commit()
+    flash(f"User '{user.username}' has been removed.", "success")
+    return redirect(url_for('admin_all_bookings'))
+
+@app.context_processor
+def inject_current_user():
+    user_id = session.get('user_id')
+    user = None
+    if user_id:
+        user = User.query.get(user_id)
+    return dict(current_user=user)
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/our-story')
+def our_story():
+    return render_template('our_story.html')
+
+@app.route('/team')
+def team():
+    return render_template('team.html')
+
+@app.route('/locations')
+def locations():
+    return render_template('locations.html')
+
+@app.route('/press')
+def press():
+    return render_template('press.html')
 
 @app.route('/logout')
 def logout():
     session.clear()
     flash("You have been logged out.", "success")
     return redirect(url_for('login'))
-
 
 def format_duration(booking):
     if not (booking.check_out_time and booking.check_in_time):
@@ -43,7 +85,7 @@ def format_duration(booking):
         return parts  
     else:
         return "Less than a minute"
-
+ 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -70,7 +112,6 @@ def register():
         email = request.form.get('email')
         password = request.form.get('password')
 
-        
         user_exists = User.query.filter((User.username == username) | (User.email == email)).first()
         if user_exists:
             flash("Username or email already exists. Please choose another.", "error")
@@ -140,7 +181,7 @@ def view_lot_details(lot_id):
         spot_details.append(detail)
 
     return render_template('lot_details.html', lot=lot, spot_details=spot_details)
-
+ 
 @app.route('/admin/lot/<int:lot_id>/add_spot', methods=['POST'])
 def add_spot(lot_id):
     if not session.get('is_admin'):
@@ -205,7 +246,7 @@ def edit_lot(lot_id):
         return redirect(url_for('admin_dashboard'))
 
     return render_template('edit_lot.html', lot=lot_to_edit)
- 
+
 @app.route('/admin/lot/delete/<int:lot_id>', methods=['POST'])
 def delete_lot(lot_id):
     if not session.get('is_admin'):
@@ -226,7 +267,7 @@ def delete_lot(lot_id):
         flash(f"Parking lot '{lot_to_delete.name}' has been deleted successfully.", "success")
     
     return redirect(url_for('admin_dashboard'))
- 
+
 @app.route('/admin/users')
 def view_users():
     if not session.get('is_admin'):
@@ -293,7 +334,7 @@ def admin_all_bookings():
         booking.duration_str = format_duration(booking)
 
     return render_template('admin_all_bookings.html', bookings=all_bookings)
-  
+   
 @app.route('/dashboard')
 def user_dashboard():
     user_id = session.get('user_id')
@@ -307,7 +348,7 @@ def user_dashboard():
         lot.available_spots = ParkingSpot.query.filter_by(lot_id=lot.id, status='A').count()
             
     return render_template('user_dashboard.html', lots=lots, active_bookings=active_bookings)
- 
+
 @app.route('/book/<int:lot_id>', methods=['POST'])
 def book_spot(lot_id):
     user_id = session.get('user_id')
@@ -407,5 +448,9 @@ def user_chart_data():
             "data": list(visits_per_lot.values())
         }
     }
-    
+    print("[DEBUG] /api/user/chart-data for user_id", user_id, ":", chart_data)
     return jsonify(chart_data)
+
+
+
+

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locations - Parkkro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .locations-hero { min-height: 60vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(120deg, #1D1A39 60%, #F39F5A 100%); position: relative; border-radius: 0 0 32px 32px; box-shadow: 0 8px 32px rgba(29,26,57,0.15); overflow: hidden; }
+        .locations-hero .hero-content { z-index: 2; color: #E8BCB9; text-align: left; max-width: 600px; padding: 3em 2em; background: rgba(29,26,57,0.7); border-radius: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+        .locations-hero h1 { color: #F39F5A; font-size: 2.8em; margin-bottom: 0.5em; text-shadow: 0 2px 20px rgba(243,159,90,0.2); }
+        .locations-hero p { font-size: 1.3em; color: #E8BCB9; margin-bottom: 1.5em; }
+        .locations-hero .hero-image { position: absolute; right: 5vw; bottom: 0; width: 340px; max-width: 40vw; opacity: 0.85; border-radius: 32px; box-shadow: 0 8px 32px #1D1A3933; }
+        @media (max-width: 900px) { .locations-hero { flex-direction: column; min-height: 40vh; } .locations-hero .hero-image { position: static; width: 80vw; max-width: 340px; margin: 2em auto 0 auto; } .locations-hero .hero-content { text-align: center; } }
+        .locations-section { max-width: 900px; margin: 3em auto 2em auto; background: rgba(232,188,185,0.10); border-radius: 18px; padding: 2.5em 2em; color: #1D1A39; box-shadow: 0 2px 12px #1D1A3933; }
+        .locations-section h2 { color: #F39F5A; margin-bottom: 1em; }
+        .locations-section p { font-size: 1.15em; line-height: 1.7; }
+        .locations-list { display: flex; flex-wrap: wrap; gap: 2em; justify-content: center; margin-top: 2em; }
+        .location-card { background: rgba(29,26,57,0.85); color: #E8BCB9; border-radius: 16px; padding: 2em 1.5em; box-shadow: 0 2px 12px #1D1A3933; text-align: center; width: 220px; }
+        .location-card h3 { color: #F39F5A; margin-bottom: 0.3em; }
+        .location-card p { font-size: 1em; color: #E8BCB9; margin-bottom: 0.5em; }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <div style="height:80px;"></div>
+    <section class="locations-hero">
+        <div class="hero-content">
+            <h1><i class="fas fa-map-marker-alt"></i> Locations</h1>
+            <p>Parkkro is expanding across the city! Find our smart parking solutions at these convenient locations, with more coming soon.</p>
+        </div>
+        <img src="{{ url_for('static', filename='images/bg.jpg') }}" alt="Locations" class="hero-image">
+    </section>
+    <section class="locations-section">
+        <h2>Available Locations</h2>
+        <div class="locations-list">
+            <div class="location-card">
+                <h3>Downtown Plaza</h3>
+                <p>Central business district, near shopping and offices.</p>
+            </div>
+            <div class="location-card">
+                <h3>City Mall</h3>
+                <p>Easy access to retail, dining, and entertainment.</p>
+            </div>
+            <div class="location-card">
+                <h3>Airport Zone</h3>
+                <p>Secure parking for travelers and visitors.</p>
+            </div>
+            <div class="location-card">
+                <h3>Tech Park</h3>
+                <p>Perfect for daily commuters and IT professionals.</p>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

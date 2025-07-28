@@ -1,0 +1,96 @@
+body {
+    background: linear-gradient(135deg, #1D1A39 0%, #451952 30%, #AE445A 70%, #F39F5A 100%);
+    color: #E8BCB9;
+    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+}
+
+.lot-details-container {
+    background: rgba(29,26,57,0.92);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px 0 #1D1A3933;
+    padding: 2.5em 2em;
+    margin: 2em auto;
+    max-width: 800px;
+}
+
+h1, h2 {
+    color: #F39F5A;
+    text-shadow: 0 2px 8px #1D1A3988;
+}
+
+.spot {
+    background: linear-gradient(90deg, #451952 60%, #AE445A 100%);
+    color: #E8BCB9;
+    border-radius: 12px;
+    padding: 1em 1.5em;
+    margin: 1em 0;
+    box-shadow: 0 2px 8px #1D1A3933;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.spot.occupied {
+    background: linear-gradient(90deg, #dc3545 60%, #AE445A 100%);
+    color: #fff;
+}
+.spot.available {
+    background: linear-gradient(90deg, #28a745 60%, #F39F5A 100%);
+    color: #fff;
+}
+
+.spot .user {
+    font-weight: bold;
+    color: #E8BCB9;
+}
+
+.btn {
+    padding: 10px 22px;
+    border-radius: 24px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1em;
+    background: linear-gradient(90deg, #451952 60%, #AE445A 100%);
+    letter-spacing: 1px;
+    transition: background 0.2s, transform 0.1s;
+}
+.btn:hover, .btn:focus {
+    background: linear-gradient(90deg, #F39F5A 60%, #E8BCB9 100%);
+    color: #1D1A39;
+    transform: translateY(-2px) scale(1.04);
+}
+.spot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1em;
+    margin-top: 2em;
+}
+.spot {
+    padding: 1em;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    position: relative; 
+}
+.spot.available { background-color: #28a745; }
+.spot.occupied { background-color: #dc3545; }
+.spot span.user-info { font-size: 0.8em; font-weight: normal; display: block; margin-top: 5px; }
+.delete-spot-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(0,0,0,0.3);
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    padding: 0;
+}
+.add-spot-form { margin-top: 2em; }

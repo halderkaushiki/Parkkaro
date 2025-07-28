@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team - Parkkro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .team-hero { min-height: 60vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(120deg, #1D1A39 60%, #F39F5A 100%); position: relative; border-radius: 0 0 32px 32px; box-shadow: 0 8px 32px rgba(29,26,57,0.15); overflow: hidden; }
+        .team-hero .hero-content { z-index: 2; color: #E8BCB9; text-align: left; max-width: 600px; padding: 3em 2em; background: rgba(29,26,57,0.7); border-radius: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+        .team-hero h1 { color: #F39F5A; font-size: 2.8em; margin-bottom: 0.5em; text-shadow: 0 2px 20px rgba(243,159,90,0.2); }
+        .team-hero p { font-size: 1.3em; color: #E8BCB9; margin-bottom: 1.5em; }
+        .team-hero .hero-image { position: absolute; right: 5vw; bottom: 0; width: 340px; max-width: 40vw; opacity: 0.85; border-radius: 32px; box-shadow: 0 8px 32px #1D1A3933; }
+        @media (max-width: 900px) { .team-hero { flex-direction: column; min-height: 40vh; } .team-hero .hero-image { position: static; width: 80vw; max-width: 340px; margin: 2em auto 0 auto; } .team-hero .hero-content { text-align: center; } }
+        .team-section { max-width: 900px; margin: 3em auto 2em auto; background: rgba(232,188,185,0.10); border-radius: 18px; padding: 2.5em 2em; color: #1D1A39; box-shadow: 0 2px 12px #1D1A3933; }
+        .team-section h2 { color: #F39F5A; margin-bottom: 1em; }
+        .team-section p { font-size: 1.15em; line-height: 1.7; }
+        .team-members { display: flex; flex-wrap: wrap; gap: 2em; justify-content: center; margin-top: 2em; }
+        .member-card { background: rgba(29,26,57,0.85); color: #E8BCB9; border-radius: 16px; padding: 2em 1.5em; box-shadow: 0 2px 12px #1D1A3933; text-align: center; width: 220px; }
+        .member-card img { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 1em; border: 3px solid #F39F5A; object-fit: cover; }
+        .member-card h3 { color: #F39F5A; margin-bottom: 0.3em; }
+        .member-card p { font-size: 1em; color: #E8BCB9; margin-bottom: 0.5em; }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <div style="height:80px;"></div>
+    <section class="team-hero">
+        <div class="hero-content">
+            <h1><i class="fas fa-users"></i> Our Team</h1>
+            <p>Meet the passionate minds behind Parkkro. Our diverse team brings together expertise in technology, design, and customer experience to deliver the best parking solution for you.</p>
+        </div>
+        <img src="{{ url_for('static', filename='images/hero.jpg') }}" alt="Our Team" class="hero-image">
+    </section>
+    <section class="team-section">
+        <h2>Team Members</h2>
+        <div class="team-members">
+            
+            <div class="member-card">
+                <img src="{{ url_for('static', filename='images/owner.jpg') }}" alt="Member 2">
+                <h3>Kaushiki</h3>
+                <p>Founder & CEO</p>
+                <p>Code wizard and tech innovator.</p>
+            </div>
+            
+            
+            </div>
+        </div>
+    </section>
+</body>
+</html>

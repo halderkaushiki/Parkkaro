@@ -439,10 +439,10 @@
             <div class="dropdown">
                 <a href="#about" class="nav-link"><i class="fas fa-info-circle"></i> About <i class="fas fa-chevron-down"></i></a>
                 <div class="dropdown-content">
-                    <a href="#our-story"><i class="fas fa-book"></i> Our Story</a>
-                    <a href="#team"><i class="fas fa-users"></i> Our Team</a>
-                    <a href="#locations"><i class="fas fa-map-marker-alt"></i> Locations</a>
-                    <a href="#press"><i class="fas fa-newspaper"></i> Press</a>
+                    <a href="{{ url_for('our_story') }}"><i class="fas fa-book"></i> Our Story</a>
+                    <a href="{{ url_for('team') }}"><i class="fas fa-users"></i> Our Team</a>
+                    <a href="{{ url_for('locations') }}"><i class="fas fa-map-marker-alt"></i> Locations</a>
+                    <a href="{{ url_for('press') }}"><i class="fas fa-newspaper"></i> Press</a>
                 </div>
             </div>
             <a href="#contact" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>

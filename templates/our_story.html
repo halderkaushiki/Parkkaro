@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Story - Parkkro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .story-hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(120deg, #1D1A39 60%, #F39F5A 100%);
+            position: relative;
+            border-radius: 0 0 32px 32px;
+            box-shadow: 0 8px 32px rgba(29,26,57,0.15);
+            overflow: hidden;
+        }
+        .story-hero .hero-content {
+            z-index: 2;
+            color: #E8BCB9;
+            text-align: left;
+            max-width: 600px;
+            padding: 3em 2em;
+            background: rgba(29,26,57,0.7);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+        }
+        .story-hero h1 {
+            color: #F39F5A;
+            font-size: 2.8em;
+            margin-bottom: 0.5em;
+            text-shadow: 0 2px 20px rgba(243,159,90,0.2);
+        }
+        .story-hero p {
+            font-size: 1.3em;
+            color: #E8BCB9;
+            margin-bottom: 1.5em;
+        }
+        .story-hero .hero-image {
+            position: absolute;
+            right: 5vw;
+            bottom: 0;
+            width: 340px;
+            max-width: 40vw;
+            opacity: 0.85;
+            border-radius: 32px;
+            box-shadow: 0 8px 32px #1D1A3933;
+        }
+        @media (max-width: 900px) {
+            .story-hero { flex-direction: column; min-height: 40vh; }
+            .story-hero .hero-image { position: static; width: 80vw; max-width: 340px; margin: 2em auto 0 auto; }
+            .story-hero .hero-content { text-align: center; }
+        }
+        .story-section {
+            max-width: 900px;
+            margin: 3em auto 2em auto;
+            background: rgba(232,188,185,0.10);
+            border-radius: 18px;
+            padding: 2.5em 2em;
+            color: #1D1A39;
+            box-shadow: 0 2px 12px #1D1A3933;
+        }
+        .story-section h2 {
+            color: #F39F5A;
+            margin-bottom: 1em;
+        }
+        .story-section p {
+            font-size: 1.15em;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <div style="height:80px;"></div>
+    <section class="story-hero">
+        <div class="hero-content">
+            <h1><i class="fas fa-book-open"></i> Our Story</h1>
+            <p>Welcome to Parkkro! Our journey began with a simple idea: to make parking smarter, easier, and stress-free for everyone. We believe in innovation, convenience, and a seamless experience for all our users.</p>
+        </div>
+        <img src="{{ url_for('static', filename='images/hero.jpg') }}" alt="Our Story" class="hero-image">
+    </section>
+    <section class="story-section">
+        <h2>Why Parkkro?</h2>
+        <p>We saw the daily struggle of finding parking in busy cities and set out to solve it with technology. Parkkro is built by a passionate team dedicated to transforming urban mobility and making your life easier, one parking spot at a time.</p>
+    </section>
+</body>
+</html>
