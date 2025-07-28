@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Booking Records</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+    <div>
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-primary"> Back to Dashboard</a>
+    </div>
+    <h1>All Booking Records</h1>
+    <hr>
+    <table>
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Lot Name</th>
+                <th>Spot</th>
+                <th>Vehicle No.</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Duration</th>
+                <th>Cost</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.user.username }}</td>
+                <td>{{ booking.parking_spot.parking_lot.name }}</td>
+                <td>#{{ booking.parking_spot.spot_number }}</td>
+                <td>{{ booking.vehicle_number }}</td>
+                <td>{{ booking.check_in_time.strftime('%b %d, %H:%M') }}</td>
+                <td>{{ booking.check_out_time.strftime('%b %d, %H:%M') }}</td>
+                <td>{{ booking.duration_str }}</td>
+                <td>₹{{ '%.2f'|format(booking.total_cost) }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('remove_user', user_id=booking.user.id) }}" onsubmit="return confirm('Are you sure you want to remove this user?');">
+                        <button type="submit" class="btn btn-danger" style="padding:0.3em 0.8em; font-size:0.95em;">Remove User</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="9">No booking records found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
