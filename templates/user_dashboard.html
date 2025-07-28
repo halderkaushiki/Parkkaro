@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Parkkro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="nav-container">
+            <a href="{{ url_for('index') }}" class="logo-container">
+                <div class="logo-glow"></div>
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Parkkro Logo" class="navbar-logo">
+            </a>
+            
+            <div class="nav-actions">
+                <span class="user-greeting"><i class="fas fa-user"></i> Welcome, {{ current_user.username }}</span>
+                <a href="{{ url_for('logout') }}" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="dashboard-container">
+        <h1><i class="fas fa-tachometer-alt"></i> Your Dashboard</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <hr>
+
+    <h2>Your Active Parking Spots</h2>
+    {% if active_bookings %}
+        {% for booking in active_bookings %}
+        <div class="card-form" style="margin-bottom: 1em;">
+            <p><strong>Lot:</strong> {{ booking.parking_spot.parking_lot.name }}</p>
+            <p><strong>Spot:</strong> #{{ booking.parking_spot.spot_number }}</p>
+            <p><strong>Checked in at:</strong> {{ booking.check_in_time.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+            
+            <form action="{{ url_for('release_spot', booking_id=booking.id) }}" method="POST">
+                <button type="submit" class="btn btn-danger">Release This Spot</button>
+            </form>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>You have no active parking spots.</p>
+    {% endif %}
+    
+    <hr>
+
+    <div class="dashboard-section">
+        <h2><i class="fas fa-car"></i> Book a Parking Spot</h2>
+        <div class="lot-table-container">
+            <table class="lot-table">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-parking"></i> Lot Name</th>
+                        <th><i class="fas fa-map-marker-alt"></i> Address</th>
+                        <th><i class="fas fa-rupee-sign"></i> Price/Hour</th>
+                        <th><i class="fas fa-car-side"></i> Available Spots</th>
+                        <th><i class="fas fa-ticket-alt"></i> Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lot in lots %}
+                    <tr>
+                        <td>{{ lot.name }}</td>
+                        <td>{{ lot.address }}</td>
+                        <td>₹{{ '%.2f'|format(lot.price_per_hour) }}</td>
+                        <td>
+                            <div class="spot-counter">
+                                <span class="spot-number">{{ lot.available_spots }}</span>
+                                <span class="spot-total">/ {{ lot.capacity }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            {% if lot.available_spots > 0 %}
+                                <form action="{{ url_for('book_spot', lot_id=lot.id) }}" method="POST" class="booking-form">
+                                    <input type="text" name="vehicle_number" class="vehicle-input" placeholder="Enter Vehicle No." required>
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="fas fa-check"></i> Book Now
+                                    </button>
+                                </form>
+                            {% else %}
+                                <button class="btn btn-disabled" disabled>
+                                    <i class="fas fa-ban"></i> Full
+                                </button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Actions</h3>
+                <ul>
+                    <li><a href="{{ url_for('user_history') }}"><i class="fas fa-history"></i> Booking History</a></li>
+                    <li><a href="{{ url_for('user_charts') }}"><i class="fas fa-chart-bar"></i> View Summary</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Help & Support</h3>
+                <ul class="contact-info">
+                    <li><i class="fas fa-envelope"></i> support@parkkro.com</li>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-question-circle"></i> FAQs</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Parkkro. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
