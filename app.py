@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Kaushikimad1'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///parking.db'
 db.init_app(app)
-
+ 
 # Remove user route for admin
 @app.route('/admin/remove_user/<int:user_id>', methods=['POST'])
 def remove_user(user_id):
